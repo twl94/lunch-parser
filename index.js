@@ -16,21 +16,25 @@ const getSchool = async (name) => {
     const res = await fetch(`${schoolAPI}${name}`);
     const json = await res.json();
     
-    if (json['schoolInfo'][1] && json['schoolInfo'][1]["row"]) {
-        for (let i = 0; i < json['schoolInfo'][1]["row"].length; i++) {
-            let schoolData = json['schoolInfo'][1]["row"][i];
-
-            let jsonData = {
-                regionCode: schoolData.ATPT_OFCDC_SC_CODE,
-                schoolCode: schoolData.SD_SCHUL_CODE,
-                schoolName: schoolData.SCHUL_NM,
-                schoolWebsite: schoolData.HMPG_ADRES,
-                schoolFax: schoolData.ORG_FAXNO,
-                schoolAddress: schoolData.ORG_RDNMA,
+    try {
+        if (json['schoolInfo'][1] && json['schoolInfo'][1]["row"]) {
+            for (let i = 0; i < json['schoolInfo'][1]["row"].length; i++) {
+                let schoolData = json['schoolInfo'][1]["row"][i];
+    
+                let jsonData = {
+                    regionCode: schoolData.ATPT_OFCDC_SC_CODE,
+                    schoolCode: schoolData.SD_SCHUL_CODE,
+                    schoolName: schoolData.SCHUL_NM,
+                    schoolWebsite: schoolData.HMPG_ADRES,
+                    schoolFax: schoolData.ORG_FAXNO,
+                    schoolAddress: schoolData.ORG_RDNMA,
+                }
+    
+                schools.push(jsonData)
             }
-
-            schools.push(jsonData)
-        }
+        } 
+    } catch (e) {
+        schools = []
     }
 
     return schools;
@@ -58,17 +62,26 @@ const getLunch = async (date, regionCode, schoolCode) => {
     const res = await fetch(lunchAPI);
     const json = await res.json();
 
-    let mealData = json.mealServiceDietInfo[1]['row'][0]['DDISH_NM']
-    let ntr = json.mealServiceDietInfo[1]['row'][0]['NTR_INFO']
-    let origin = json.mealServiceDietInfo[1]['row'][0]['ORPLC_INFO']
-    let data = {
-        mealData: mealData.split('<br/>'),
-        ntrInfo: ntr.split('<br/>'),
-        origin: origin.split('<br/>'),
-        calories: json.mealServiceDietInfo[1]['row'][0]['CAL_INFO']
+    try {
+        let mealData = json.mealServiceDietInfo[1]['row'][0]['DDISH_NM']
+        let ntr = json.mealServiceDietInfo[1]['row'][0]['NTR_INFO']
+        let origin = json.mealServiceDietInfo[1]['row'][0]['ORPLC_INFO']
+        let data = {
+            mealData: mealData.split('<br/>'),
+            ntrInfo: ntr.split('<br/>'),
+            origin: origin.split('<br/>'),
+            calories: json.mealServiceDietInfo[1]['row'][0]['CAL_INFO']
+        }
+        return data
+    } catch (e) {
+        let data = {
+            mealData: [],
+            ntrInfo: [],
+            origin: [],
+            calories: []
+        }
+        return data
     }
-
-    return data
 } 
 
 

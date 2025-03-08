@@ -41,3 +41,5 @@ async function parseSchools(){
 # 사용한 API
  - [나이스 교육정보 개방 포털](https://open.neis.go.kr/)
 
+# Special Thanks 
+- [OHHI3368](https://github.com/OHHI3368)
