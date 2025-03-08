@@ -1,0 +1,21 @@
+{
+  "name": "lunch-parser",
+  "version": "1.0.0",
+  "main": "index.js",
+  "keywords": [
+    "korean",
+    "lunch",
+    "api",
+    "neis"
+  ],
+  "author": "twl94",
+  "license": "MIT",
+  "description": "Node.js 전국 학교 급식 파서",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/twl94/lunch-parser.git"
+  },
+  "dependencies": {
+    "node-fetch": "^2.7.0"
+  }
+}
